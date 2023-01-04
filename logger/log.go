@@ -92,7 +92,7 @@ func (l *FileLogger) openFile(trunc bool) error {
 	fileInfo, err := os.Stat(l.name)
 
 	if trunc || err != nil {
-		l.file, err = os.Create(l.name)
+		l.file, err = os.OpenFile(l.name, os.O_RDWR|os.O_APPEND|os.O_TRUNC, 0640)
 	} else {
 		l.fileSize = fileInfo.Size()
 		l.file, err = os.OpenFile(l.name, os.O_RDWR|os.O_APPEND, 0640)
